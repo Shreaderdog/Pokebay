@@ -7,5 +7,7 @@ const router = express.Router();
 const cardController = require("../controllers/cards.js");
 
 router.get("/search", cardController.search);
+router.get("/getTypes", cardController.getTypes);
+router.get("/getSets", cardController.getSets);
 
 module.exports = router;

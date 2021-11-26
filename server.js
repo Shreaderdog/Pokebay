@@ -12,7 +12,7 @@ const ebayRouter = require("./src/routes/ebay.js");
 const app = express();
 
 // request parsing
-app.use(express.json({ extended: true }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors is required
