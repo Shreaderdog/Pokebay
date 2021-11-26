@@ -8,16 +8,16 @@ pokemon.configure({apiKey: process.env.pokemonKey});
 
 exports.search = function(req, res) {
     let qstring = "";
-    if (req.body.searchquery.name) {
-        qstring.concat("name:", req.body.searchquery.name, "* ");
+    if (req.body.searchquery.name != "") {
+       qstring = qstring.concat("name:", req.body.searchquery.name, "* ");
     }
-    if (req.body.searchquery.type) {
-        qstring.concat("types: ", req.body.searchquery.type, " ");
+    if (req.body.searchquery.type != "") {
+       qstring = qstring.concat("types:", req.body.searchquery.type, " ");
     }
-    if(req.body.searchquery.set) {
-        qstring.concat("set.name:", req.body.searchquery.set, " ");
+    if(req.body.searchquery.set != "") {
+        qstring = qstring.concat("set.name:", req.body.searchquery.set);
     }
-    pokemon.card.where({q: qstring, pageSize: 12, page: 1 })
+    pokemon.card.where({q: `${qstring}`, pageSize: 12, page: 1 })
         .then(result => {
             return res.json(result);
         }
