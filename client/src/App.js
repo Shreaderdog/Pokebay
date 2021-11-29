@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React, { Component } from "react";
+
+import API from './api';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component() {
+
+  constructor(props) {
+    super(props);
+    let cardfunc = this.getcards.bind(this);
+    let ebayfunc = this.getebay.bind(this);
+    this.state = {
+      cardfunction: cardfunc,
+      ebayfunction: ebayfunc,
+      cardlist: [],
+      ebayResults: [],
+    };
+  }
+
+  async getcards(queryobject) {
+
+  }
+
+  async getebay(queryobject) {
+
+  }
+
+  render() {
+    return (
+      <>
+
+      </>
+    )
+  }
 }
 
 export default App;
