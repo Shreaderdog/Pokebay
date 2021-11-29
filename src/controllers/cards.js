@@ -17,6 +17,9 @@ exports.search = function(req, res) {
     if(req.body.searchquery.set != "") {
         qstring = qstring.concat("set.name:", req.body.searchquery.set);
     }
+    if(req.body.searchquery.supertype != "") {
+        qstring = qstring.concat("supertype:", req.body.searchquery.supertype);
+    }
     pokemon.card.where({q: `${qstring}`, pageSize: 12, page: 1 })
         .then(result => {
             return res.json(result);
