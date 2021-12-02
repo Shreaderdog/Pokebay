@@ -1,0 +1,10 @@
+.color-nav {
+    background-color: orange;
+}
+
+.color-brand {
+    font-size: 400%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
