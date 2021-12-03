@@ -1,6 +1,0 @@
-.ebayrow:nth-child(even) {
-    background-color: snow;
-}
-.ebayrow:nth-child(odd) {
-    background-color: aliceblue;
-}

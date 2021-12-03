@@ -8,7 +8,6 @@ pokemon.configure({apiKey: process.env.pokemonKey});
 
 exports.search = function(req, res) {
     let qstring = "";
-    console.log(req.body)
     if (req.body.name) {
        qstring = qstring.concat("name:", req.body.name, "* ");
     }
@@ -16,7 +15,7 @@ exports.search = function(req, res) {
        qstring = qstring.concat("types:", req.body.type, " ");
     }
     if(req.body.set) {
-        qstring = qstring.concat("set.name:", req.body.set);
+        qstring = qstring.concat("set.id:", req.body.set, " ");
     }
     if(req.body.supertype) {
         qstring = qstring.concat("supertype:", req.body.supertype);
@@ -32,20 +31,25 @@ exports.search = function(req, res) {
                 let cards = [];
                 for (var i = 0; i < result.count; i++) {
                     let y = "unlisted";
-                    if(result.data[i].tcgplayer.prices.normal) {
-                        y = result.data[i].tcgplayer.prices.normal.mid
-                    } else if(result.data[i].tcgplayer.prices.holofoil) {
-                        y = result.data[i].tcgplayer.prices.holofoil.mid
-                    } else if(result.data[i].tcgplayer.prices.reverseHolofoil) {
-                        y = result.data[i].tcgplayer.prices.reverseHolofoil.mid
+                    let z = ""
+                    if (result.data[i].tcgplayer) {
+                        if(result.data[i].tcgplayer.prices.normal) {
+                            y = result.data[i].tcgplayer.prices.normal.mid
+                        } else if(result.data[i].tcgplayer.prices.holofoil) {
+                            y = result.data[i].tcgplayer.prices.holofoil.mid
+                        } else if(result.data[i].tcgplayer.prices.reverseHolofoil) {
+                            y = result.data[i].tcgplayer.prices.reverseHolofoil.mid
+                        }
+                        z = result.data[i].tcgplayer.url;
                     }
                     let x = {
+                        supertype: result.data[i].supertype,
                         name: result.data[i].name,
                         type: result.data[i].types,
                         hp: result.data[i].hp,
                         setname: result.data[i].set.name,
                         tcgplayerprice: y,
-                        tcglink: result.data[i].tcgplayer.url,
+                        tcglink: z,
                         image: result.data[i].images.small
                     }
                     cards = [...cards, x];
@@ -70,13 +74,17 @@ exports.getTypes = function(req, res) {
 exports.getSets = function(req, res) {
     pokemon.set.all()
         .then((sets) => {
-            let setnames = [];
+            let setdata = [];
             for(var i = 0; i < sets.length; i++) {
                 if (i != 110){
-                    setnames = [...setnames, sets[i].name];
+                    let x = {
+                        name: sets[i].name,
+                        setid: sets[i].id
+                    }
+                    setdata = [...setdata, x];
                 }
             }
-            res.send(setnames);
+            res.send(setdata);
         }
     )
 }
