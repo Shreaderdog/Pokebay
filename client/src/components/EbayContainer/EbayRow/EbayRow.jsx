@@ -9,7 +9,7 @@ class EbayRow extends Component {
                     <Card.Img style={{height: "10rem", width: "7rem"}} className="align-self-center" variant="top" src={this.props.carddata.image}/>
                     <ListGroup variant="flush">
                         <ListGroup.Item>${this.props.carddata.price}</ListGroup.Item>
-                        <ListGroup.Item><a href={this.props.carddata.url}>{this.props.carddata.title}</a></ListGroup.Item>
+                        <ListGroup.Item><a href={this.props.carddata.url} target="_blank">{this.props.carddata.title}</a></ListGroup.Item>
                     </ListGroup>
                 </Card>
         )

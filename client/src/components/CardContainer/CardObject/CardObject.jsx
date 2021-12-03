@@ -37,7 +37,7 @@ class CardObject extends Component {
                             <ListGroup.Item>HP: {this.state.hp}</ListGroup.Item>
                         </>:null}
                         <ListGroup.Item>Set Name: {this.state.set}</ListGroup.Item>
-                        <ListGroup.Item>TCGPlayer Price: <a href={this.state.link}><span>{this.state.tcgprice}</span></a></ListGroup.Item>
+                        <ListGroup.Item>TCGPlayer Price: <a href={this.state.link} target="_blank"><span>{this.state.tcgprice}</span></a></ListGroup.Item>
                     </ListGroup>
                     <Button variant="primary" onClick={this.handleebay.bind(this)}>Get Ebay Results</Button>
                 </Card>
