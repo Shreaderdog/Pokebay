@@ -1,6 +1,6 @@
 import { Navbar } from "react-bootstrap";
 import './Navigation.css';
-import logo from './logo.png';
+import logo from './pokebay.svg';
 
 const Navigation = () => {
     

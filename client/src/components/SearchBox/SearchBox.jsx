@@ -9,7 +9,7 @@ class SearchBox extends Component {
         this.state = {
             types: [],
             sets: [],
-            supertypes: []
+            supertypes: [],
         }
     }
 
@@ -26,7 +26,6 @@ class SearchBox extends Component {
             .then((result) => {
                 this.setState({supertypes: result.data});
             })
-        console.log(this.state.sets)
     }
 
     setName(name) {
@@ -47,13 +46,13 @@ class SearchBox extends Component {
 
     handleChange(value, checked) {
         if (checked) {
-            this.setType(value);
+            this.setType(value.type);
         }
     }
 
     render() {
         return (
-            <div>
+            <div className="mt-5">
                 <Form>
                     <Row>
                         <Col>
@@ -61,7 +60,7 @@ class SearchBox extends Component {
                         </Col>
                         <Col>
                             <Form.Select onChange={(e) => {this.setSuperType(e.target.value)}}>
-                                <option>Select a SuperType</option>
+                                <option value={""} >Select a SuperType</option>
                                 {this.state.supertypes.map((supertype) => {return (<option key={supertype} value={supertype}>{supertype}</option>)})}
                             </Form.Select>
                         </Col>
@@ -69,14 +68,15 @@ class SearchBox extends Component {
                             <Form.Select onChange={(e) => {this.setSet(e.target.value)}}>
                                 <option>Select a Set</option>
                                 <option value={""}>All Sets</option>
-                                {this.state.sets.map((set) => {return (<option key={set} value={set}>{set}</option>)})}
+                                {this.state.sets.map((set) => {return (<option key={set.name} value={set.setid}>{set.name}</option>)})}
                             </Form.Select>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <Form.Group>
-                                {this.state.types.map((type) => {return (<Form.Check key={type} inline label={type} name="typegroup" type='radio' onChange={(e) => {this.handleChange(e.target.label, e.target.checked)}}/>)})}
+                                <Form.Check inline label="No Element" name="typegroup" type="radio" onChange={(e) => {this.handleChange("", e.target.checked)}}/>
+                                {this.state.types.map((type) => {return (<Form.Check key={type} inline label={type} name="typegroup" type='radio' onChange={(e) => {this.handleChange({type}, e.target.checked)}}/>)})}
                             </Form.Group>
                         </Col>
                         <Col>

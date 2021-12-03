@@ -6,38 +6,42 @@ class CardContainer extends Component {
     
     constructor(props) {
         super(props);
+        this.state = {
+            c: []
+        }
+    }
+
+    componentDidMount() {
         let x = [];
         let y = [];
-        let z = [];
+        let n = 0;
         for (var i = 0; i < this.props.cards.length; i++) {
-            if (i < 4) {
-                x = [...x, this.props.cards[i]];
-            } else if (i < 8) {
+            if (n < 4) {
                 y = [...y, this.props.cards[i]];
+                n += 1;
             } else {
-                z = [...z, this.props.cards[i]];
+                x = [...x, y];
+                y = [];
+                n = 0;
             }
         }
-        this.state = {
-            c1: x,
-            c2: y,
-            c3: z
+        if (y.length > 0) {
+            x = [...x, y]
         }
+        this.setState({ c: x})
     }
 
     render() {
         return (
-            <>
-                <Row className="align-self-flex-start">
-                    {this.state.c1.map((card) => <CardObject key={card.name+card.setname+card.tcgplayerprice} carddata={card} ebayfunc={this.props.ebayfunc} />)}
-                </Row>
-                <Row className="align-self-flex-start">
-                    {this.state.c2.map((card) => <CardObject key={card.name+card.setname+card.tcgplayerprice} carddata={card} ebayfunc={this.props.ebayfunc} />)}
-                </Row>
-                <Row className="align-self-flex-start">
-                    {this.state.c3.map((card) => <CardObject key={card.name+card.setname+card.tcgplayerprice} carddata={card} ebayfunc={this.props.ebayfunc} />)}
-                </Row>
-            </>
+            <div className="mr-5">
+                {this.state.c.map((c1, index) => {
+                    return (
+                        <Row className="align-self-flex-start" key={c1[0].image+index}>
+                            {c1.map((card,) => <CardObject key={card.name+card.setname+card.tcgplayerprice} carddata={card} ebayfunc={this.props.ebayfunc} />)}
+                        </Row>
+                    )
+                })}
+            </div>
         )
     }
 }

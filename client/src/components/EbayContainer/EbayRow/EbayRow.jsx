@@ -1,20 +1,17 @@
 import { Component } from "react";
-import './EbayRow.css';
+import { Card, ListGroup } from "react-bootstrap";
 
 class EbayRow extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <div className="d-flex flex-column ebayrow">
-                <img className="align-self-center mt-5 mb-2" src={this.props.carddata.image} style={{height: "7rem", width: "7rem"}} /> <br/>
-                <span className="align-self-center">${this.props.carddata.price}</span><br/>
-                <a href={this.props.carddata.url}>{this.props.carddata.title}</a> 
-                
-            </div>
+                <Card className="text-centered w-100 h-100">
+                    <Card.Img style={{height: "10rem", width: "7rem"}} className="align-self-center" variant="top" src={this.props.carddata.image}/>
+                    <ListGroup variant="flush">
+                        <ListGroup.Item>${this.props.carddata.price}</ListGroup.Item>
+                        <ListGroup.Item><a href={this.props.carddata.url}>{this.props.carddata.title}</a></ListGroup.Item>
+                    </ListGroup>
+                </Card>
         )
     }
 }

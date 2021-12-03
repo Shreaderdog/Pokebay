@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import API from './api';
 import './App.css';
+import axios from "axios";
 
 class App extends Component {
 
@@ -38,7 +39,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getcards();
+    let n = 1;
+    n += Math.floor(Math.random() * 600);
+    let g = "";
+    axios(`https://pokeapi.co/api/v2/pokemon/${n}`)
+      .then((result) => {
+        g = result.data.name;
+        this.setState({name: g})
+        this.getcards();
+        this.setState({name: ""})
+      })
+
   }
 
   errortoast(msg) {
@@ -89,8 +100,12 @@ class App extends Component {
 
     API.post('/ebay/ebayFind', searchquery)
       .then(res => {
+        if (res.data.errtext) {
+          this.errortoast(res.data.errtext);
+        } else {
         this.setState({ebayResults: res.data});
         this.setState({ebaykey: this.state.key+1});
+        }
       }
     )
   }
@@ -101,10 +116,10 @@ class App extends Component {
         <Navigation />
         <SearchBox setSet={this.state.setfunc} setName={this.state.namefunc} setType={this.state.typefunc} setSupertype={this.state.supertypefunc} getcardfunc={this.state.cardfunction}/>
         <div className="d-flex flex-row">
-          <Container className="mt-5 d-flex flex-column w-100  bg-light">
+          <Container className="mt-5 d-flex flex-column w-100 pr-10 bg-light">
             <CardContainer key={this.state.key} cards={this.state.cardlist} ebayfunc={this.state.ebayfunction} />
           </Container>
-          <Container className="mt-5 ml-10 d-flex w-50  h-50 bg-light">
+          <Container className="mt-5 pb-3 d-flex flex-column pl-10 d-flex h-50 w-50 bg-light">
             <EbayContainer key={this.state.ebaykey} res={this.state.ebayResults} />
           </Container>
           <ToastContainer/>
